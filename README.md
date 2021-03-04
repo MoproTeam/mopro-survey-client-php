@@ -1,16 +1,16 @@
-# Mopro Send Survey Client SDK in PHP
+# Mopro Survey Client in PHP
 
 Automatically send surveys to your customers via text message and collect reviews on all the major review sites.
 
 ## Usage
 
-> **Note:** This version of the SDK requires PHP 5.4 or greater.
+> **Note:** This version of the Client requires PHP 5.4 or greater.
 
 1. Send a Survey.
 ```php
 $apiKey = $argv[1];
 
-//Declare Variables to send new survey
+// Declare Variables to initialize a Survey Model Object
 $firstName = "Road";
 $lastName = "Runner";
 $email = "road.runner@yopmail.com";
@@ -18,9 +18,10 @@ $phone = "";
 $groupName = "eComm";
 $groupDesc = "eComm";
 
-//Create an Survey Object
+// Create a Survey Model Object
 $objSurvey = new Survey($firstName, $lastName, $email, $phone, $groupName, $groupDesc);
 
+// Create an API Client Object
 $apiClient = new ApiClient($apiKey);
 
 try {

@@ -10,7 +10,7 @@ if (!isset($argv[1])) {
 
 $apiKey = $argv[1];
 
-//Declare Variables to send new survey
+// Declare Variables to initialize a Survey Model Object
 $firstName = "Road";
 $lastName = "Runner";
 $email = "road.runner@yopmail.com";
@@ -18,9 +18,10 @@ $phone = "";
 $groupName = "eComm";
 $groupDesc = "eComm";
 
-//Create an Survey Object
+// Create a Survey Model Object
 $objSurvey = new Survey($firstName, $lastName, $email, $phone, $groupName, $groupDesc);
 
+// Create an API Client Object
 $apiClient = new ApiClient($apiKey);
 
 try {
