@@ -1,5 +1,7 @@
 # Mopro Survey Client in PHP
 
+[![PHP Composer](https://github.com/MoproTeam/mopro-survey-client-php/actions/workflows/php.yml/badge.svg)](https://github.com/MoproTeam/mopro-survey-client-php/actions/workflows/php.yml)
+
 Automatically send surveys to your customers via text message and collect reviews on all the major review sites.
 
 ## Usage
