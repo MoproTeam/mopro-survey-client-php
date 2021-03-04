@@ -1,10 +1,20 @@
 <?php
 
+include __DIR__ . "/../vendor/autoload.php";
+
+Logger::configure("./log4php.xml");
+
 class ApiClient {
+    private $logger;
+    private $debug;
+
     var $apiUrl;
     var $apiKey;
 
-    function __construct($apiKey) {
+    function __construct($apiKey, $isDebug = false) {
+        $this->logger = Logger::getLogger(__CLASS__);
+        $this->debug = $isDebug;
+
         $this->apiKey = $apiKey;
 
         $this->apiUrl = "https://api.cml.ai/v1/integration";
@@ -99,13 +109,17 @@ class ApiClient {
         curl_close($ch);
 
         if (isset($error_msg)) {
+            $this->logError($error_msg);
+
             throw new Exception($error_msg);
         }
         else {
             $response = json_decode($result);
             
-            if ($response->status == 200) {
-                if (!is_null($response) && isset($response) && property_exists($response, "data") && !empty((array)$response->data)) {
+            if (!is_null($response) && isset($response) && property_exists($response, "status") && $response->status == 200) {
+                $this->logInfo($response);
+                
+                if (property_exists($response, "data") && !empty((array)$response->data)) {
                     return $response->data;
                 }
                 else {
@@ -113,9 +127,33 @@ class ApiClient {
                 }
             }
             else {
-                throw new Exception($response->error->name . " : " . $response->error->message);
+                $this->logError($response);
+
+                if (!is_null($response) && isset($response) && property_exists($response, "error") && property_exists($response->error, "name") && property_exists($response->error, "message")) {
+                    throw new Exception($response->error->name . " : " . $response->error->message);
+                }
+                else if (!is_null($response) && isset($response) && property_exists($response, "error") && property_exists($response->error, "name")) {
+                    throw new Exception($response->error->name);
+                }
+                else if (!is_null($response) && isset($response) && property_exists($response, "error") && property_exists($response->error, "message")) {
+                    throw new Exception($response->error->message);
+                }
+                else {
+                    throw new Exception("Non 200 OK Response");
+                }
             }
         }
     }
+
+    private function logInfo($data) {
+        if ($this->debug) {
+            $this->logger->info($data);
+        }
+    }
+
+    private function logError($data) {
+        if ($this->debug) {
+            $this->logger->error($data);
+        }
+    }
 }
-?>

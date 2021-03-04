@@ -1,36 +1,41 @@
 <?php
 
-include "../src/ApiClient.php";
+include __DIR__ . "/../vendor/autoload.php";
+include __DIR__ . "/../src/models/request/survey.inc";
 
-include "../src/models/request/survey.inc";
+use PHPUnit\Framework\TestCase;
 
-if (!isset($argv[1])) {
-    exit("apiKey is missing!");
+Logger::configure(__DIR__ . "/../log4php.xml");
+
+final class SurveyTest extends TestCase {
+    /** @test */
+    public function testSendSurvey(): void {
+        $apiKey = "Private API key";
+
+        // Declare Variables to initialize a Survey Model Object
+        $firstName = "Road";
+        $lastName = "Runner";
+        $email = "road.runner@yopmail.com";
+        $phone = "";
+        $groupName = "eComm";
+        $groupDesc = "eComm";
+
+        // Create a Survey Model Object
+        $objSurvey = new Survey($firstName, $lastName, $email, $phone, $groupName, $groupDesc);
+
+        // Create an API Client Object
+        $apiClient = new ApiClient($apiKey, false);
+
+        // Post HTTP Request to the API
+        $result = false;
+        try {
+            $result = $apiClient->post("/sendsurvey", $objSurvey);
+        }
+        catch (Exception $e) {
+            echo "Caught exception: ",  $e->getMessage(), "\n";
+        }
+        
+        // Assertion
+        $this->assertEquals($result, false);
+    }
 }
-
-$apiKey = $argv[1];
-
-// Declare Variables to initialize a Survey Model Object
-$firstName = "Road";
-$lastName = "Runner";
-$email = "road.runner@yopmail.com";
-$phone = "";
-$groupName = "eComm";
-$groupDesc = "eComm";
-
-// Create a Survey Model Object
-$objSurvey = new Survey($firstName, $lastName, $email, $phone, $groupName, $groupDesc);
-
-// Create an API Client Object
-$apiClient = new ApiClient($apiKey);
-
-try {
-    $result = $apiClient->post("/sendsurvey", $objSurvey);
-
-    //Print Result
-    print_r ($result);
-}
-catch (Exception $e) {
-    echo "Caught exception: ",  $e->getMessage(), "\n";
-}
-?>
