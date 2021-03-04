@@ -1,0 +1,8 @@
+<configuration xmlns="http://logging.apache.org/log4php/">
+    <appender name="default" class="LoggerAppenderConsole">
+        <layout class="LoggerLayoutSimple" />
+    </appender>
+    <root>
+        <appender_ref ref="default" />
+    </root>
+</configuration>

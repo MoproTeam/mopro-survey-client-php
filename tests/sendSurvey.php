@@ -1,10 +1,15 @@
 <?php
 
-include "../src/ApiClient.php";
+include "../vendor/autoload.php";
 
 include "../src/models/request/survey.inc";
 
+Logger::configure("../log4php.xml");
+$logger = Logger::getLogger('tests/sendSurvey');
+
 if (!isset($argv[1])) {
+    $logger->error("apiKey is missing!");
+    
     exit("apiKey is missing!");
 }
 
@@ -28,9 +33,9 @@ try {
     $result = $apiClient->post("/sendsurvey", $objSurvey);
 
     //Print Result
-    print_r ($result);
+    $logger->info($result);
 }
 catch (Exception $e) {
-    echo "Caught exception: ",  $e->getMessage(), "\n";
+    $logger->error("Caught exception: ",  $e->getMessage());
 }
 ?>
