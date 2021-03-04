@@ -39,8 +39,28 @@ catch (Exception $e) {
 
 All other examples are available [here](https://github.com/MoproTeam/mopro-survey-client-php/blob/main/tests).
 
+## Unit Test
+
+This repo contains unit test scripts using [Composer PHP Dependency Manager](https://getcomposer.org/download/).
+
+### Validate Composer JSON
+```
+composer validate --strict
+```
+
+### Install Dependencies
+```
+composer install --prefer-dist --no-progress --no-suggest
+```
+
+### Run Unit Test
+```
+composer run-script test
+```
+
 ## License
 
+[The MIT License (MIT)](https://mit-license.org/)
 Please see the [license file](https://github.com/MoproTeam/mopro-survey-client-php/blob/main/LICENSE) for more information.
 
 ## Security Vulnerabilities

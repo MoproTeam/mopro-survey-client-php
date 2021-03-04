@@ -1,23 +1,47 @@
 {
     "name": "moproteam/mopro-survey-client-php",
-	"type": "library",
+    "type": "library",
     "description": "Automatically send surveys to your customers via text message and collect reviews on all the major review sites.",
-    "keywords": ["Mopro", "Reviews360", "Reviews", "Survey"],
+    "keywords": [
+        "Mopro",
+        "Reviews360",
+        "Reviews",
+        "Survey"
+    ],
     "homepage": "https://github.com/MoproTeam/mopro-survey-client-php",
     "license": "MIT",
-    "authors": [],
+    "authors": [
+        {
+            "name": "Gaurang Jadia",
+            "email": "gaurang.jadia@mopro.com",
+            "homepage": "https://gaurangjadia.com/",
+            "role": "Senior Software Developer"
+        }
+    ],
     "require": {
         "php": ">= 5.4.0"
     },
-	"require-dev": {
-        "apache/log4php": "2.3.0"
+    "require-dev": {
+        "apache/log4php": "2.3.0",
+        "phpunit/phpunit": "^8.5"
     },
     "autoload": {
-        "classmap": ["src"],
-        "files": ["src/ApiClient.php"]
+        "classmap": [
+            "src"
+        ],
+        "files": [
+            "src/ApiClient.php"
+        ]
     },
     "autoload-dev": {
-        "classmap": ["tests"]
+        "classmap": [
+            "src",
+            "tests"
+        ]
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit ./tests/sendSurvey.php",
+        "testVerbose": "@test -vvv"
     },
     "config": {
         "preferred-install": "dist",

@@ -1,8 +1,8 @@
 <?php
 
-include "../vendor/autoload.php";
+include __DIR__ . "/../vendor/autoload.php";
 
-Logger::configure("../log4php.xml");
+Logger::configure("./log4php.xml");
 
 class ApiClient {
     private $logger;
@@ -157,4 +157,3 @@ class ApiClient {
         }
     }
 }
-?>
