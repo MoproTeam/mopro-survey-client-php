@@ -61,6 +61,7 @@ composer run-script test
 ## License
 
 [The MIT License (MIT)](https://mit-license.org/)
+
 Please see the [license file](https://github.com/MoproTeam/mopro-survey-client-php/blob/main/LICENSE) for more information.
 
 ## Security Vulnerabilities

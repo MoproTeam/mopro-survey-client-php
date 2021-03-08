@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 include __DIR__ . "/../vendor/autoload.php";
 include __DIR__ . "/../src/models/request/survey.inc";
@@ -30,12 +30,15 @@ final class SurveyTest extends TestCase {
         $result = false;
         try {
             $result = $apiClient->post("/sendsurvey", $objSurvey);
+            
+            // Assertion
+            $this->assertEquals($result, true);
         }
         catch (Exception $e) {
             echo "Caught exception: ",  $e->getMessage(), "\n";
+
+            // Assertion
+            $this->assertEquals($result, false);
         }
-        
-        // Assertion
-        $this->assertEquals($result, false);
     }
 }

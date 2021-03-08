@@ -1,6 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 
 include __DIR__ . "/../vendor/autoload.php";
+
+use GuzzleHttp\Client;
 
 Logger::configure("./log4php.xml");
 
@@ -10,6 +12,7 @@ class ApiClient {
 
     var $apiUrl;
     var $apiKey;
+    var $httpClient;
 
     function __construct($apiKey, $isDebug = false) {
         $this->logger = Logger::getLogger(__CLASS__);
@@ -18,25 +21,37 @@ class ApiClient {
         $this->apiKey = $apiKey;
 
         $this->apiUrl = "https://api.cml.ai/v1/integration";
+
+        //Documentation: http://guzzle3.readthedocs.io/docs.html
+        //Documentation: https://github.com/guzzle/guzzle
+        $this->httpClient = new Client([
+            "debug" => false,           //Set to true to enable debug output with the handler used to send a request. For example, when using cURL to transfer requests, cURL's verbose of CURLOPT_VERBOSE will be emitted.
+            "decode_content" => true,   //Specify whether or not Content-Encoding responses (gzip, deflate, etc.) are automatically decoded.
+            //"base_uri" => $this->$base_uri,    // Base URI is used with relative requests
+            "connect_timeout" => 15,  //Float describing the number of seconds to wait while trying to connect to a server. Use 0 to wait indefinitely (the default behavior).
+            "timeout"  => 180,  // You can set any number of default request options. It should only take 180 seconds max!
+            "http_errors" => true, //Set to false to disable throwing exceptions on an HTTP protocol errors (i.e., 4xx and 5xx responses).
+            "verify" => false,  //Describes the SSL certificate verification behavior of a request.
+        ]);
     }
 
-    public function get($urlSuffix, $data) {
+    public function get($urlSuffix, $data) : string {
         return $this->makeRequest("GET", $urlSuffix, $data);
     }
 
-    public function post($urlSuffix, $data) {
+    public function post($urlSuffix, $data) : string {
         return $this->makeRequest("POST", $urlSuffix, $data);
     }
 
-    public function put($urlSuffix, $data) {
+    public function put($urlSuffix, $data) : string {
         return $this->makeRequest("PUT", $urlSuffix, $data);
     }
 
-    public function delete($urlSuffix, $data) {
+    public function delete($urlSuffix, $data) : string {
         return $this->makeRequest("DELETE", $urlSuffix, $data);
     }
 
-    private function makeRequest($method, $urlSuffix, $data) {
+    private function makeRequest($method, $urlSuffix, $data) : string {
         $url = $this->apiUrl . $urlSuffix;
         
         if ($method == "GET" && !is_null($data)) {
@@ -145,13 +160,13 @@ class ApiClient {
         }
     }
 
-    private function logInfo($data) {
+    private function logInfo($data) : void {
         if ($this->debug) {
             $this->logger->info($data);
         }
     }
-
-    private function logError($data) {
+    
+    private function logError($data) : void {
         if ($this->debug) {
             $this->logger->error($data);
         }
