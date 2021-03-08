@@ -3,6 +3,7 @@
 include __DIR__ . "/../vendor/autoload.php";
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Promise\Promise;
 
 Logger::configure("./log4php.xml");
 
@@ -39,19 +40,35 @@ class ApiClient {
         return $this->makeRequest("GET", $urlSuffix, $queryParams, $data);
     }
 
+    public function getAsync($urlSuffix, $queryParams, $data) : string {
+        return $this->makeRequestAsync("GET", $urlSuffix, $queryParams, $data);
+    }
+
     public function post($urlSuffix, $queryParams, $data) : string {
         return $this->makeRequest("POST", $urlSuffix, $queryParams, $data);
+    }
+
+    public function postAsync($urlSuffix, $queryParams, $data) : string {
+        return $this->makeRequestAsync("POST", $urlSuffix, $queryParams, $data);
     }
 
     public function put($urlSuffix, $queryParams, $data) : string {
         return $this->makeRequest("PUT", $urlSuffix, $queryParams, $data);
     }
 
+    public function putAsync($urlSuffix, $queryParams, $data) : string {
+        return $this->makeRequestAsync("PUT", $urlSuffix, $queryParams, $data);
+    }
+
     public function delete($urlSuffix, $queryParams, $data) : string {
         return $this->makeRequest("DELETE", $urlSuffix, $queryParams, $data);
     }
 
-    private function doRequest($method, $urlSuffix, $queryParams, $data) : string {
+    public function deleteAsync($urlSuffix, $queryParams, $data) : string {
+        return $this->makeRequestAsync("DELETE", $urlSuffix, $queryParams, $data);
+    }
+
+    private function makeRequestAsync($method, $urlSuffix, $queryParams, $data) : string {
         //$url = $this->apiUrl . $urlSuffix;
 
         if ($queryParams == null) {
