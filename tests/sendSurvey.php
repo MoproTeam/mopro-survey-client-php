@@ -29,8 +29,8 @@ final class SurveyTest extends TestCase {
         // Post HTTP Request to the API
         $result = false;
         try {
-            $result = $apiClient->post("/sendsurvey", $objSurvey);
-            
+            $result = $apiClient->post("/sendsurvey", null, $objSurvey);
+
             // Assertion
             $this->assertEquals($result, true);
         }
