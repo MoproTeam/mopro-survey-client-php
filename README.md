@@ -2,6 +2,8 @@
 
 [![PHP Composer](https://github.com/MoproTeam/mopro-survey-client-php/actions/workflows/php.yml/badge.svg)](https://github.com/MoproTeam/mopro-survey-client-php/actions/workflows/php.yml)
 
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/3b7b52e451ee33c6afce)
+
 Automatically send surveys to your customers via text message and collect reviews on all the major review sites.
 
 ## Usage
